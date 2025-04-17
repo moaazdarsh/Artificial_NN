@@ -1,5 +1,4 @@
 import numpy as np
-import tensorflow as ts
 
 def ReLU(X):
 
@@ -62,9 +61,10 @@ class NeuralNetwork:
 		else:
 			return(LayerActivition) 
 
-	def Optimize(self, X, Y, LearningRate = 0.01, epochs = 150):
+	def Optimize(self, X, Y, LearningRate = 0.001, epochs = 150):
 		
 		for epoch in range(epochs):
+			print(self.nn)
 			for x,y in zip(X,Y):
 
 				P, A, Z = self.Run(x, True)
@@ -93,8 +93,6 @@ class NeuralNetwork:
 									dfdZl.append(0)
 								else:
 									dfdZl.append(1)
-							
-							print(f"{El} * {dfdZl} = {El*dfdZl}")
 
 							El = El * dfdZl
 
@@ -122,12 +120,17 @@ class NeuralNetwork:
 					LayerIndex -= 1
 
 network = NeuralNetwork([1,1])
-
-X = [np.array([1]), np.array([5]), np.array([3]), np.array([8]), np.array([15]), np.array([2]), np.array([6]), np.array([4])]
-Y = [np.array([11]), np.array([51]), np.array([31]), np.array([81]), np.array([151]), np.array([21]), np.array([61]), np.array([41])]
+#X is a list of 50 random inputs
+X = [np.array([x]) for x in range(50)]
+Y = [np.array([2 * y]) for y in range (50)]
 
 network.Optimize(X,Y,epochs = 100)
 
 while True:
-	print(network.nn)
-	print(network.Run(np.array([int(input("number:"))])))
+
+	I = input("Input:")
+	I = I.split(",")
+	for i in range(len(I)):
+		I[i] = int(I[i])
+
+	print(network.Run(np.array(I)))
