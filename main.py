@@ -1,10 +1,8 @@
-import nn
+import MozaDL.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-
-network = nn.NeuralNetwork([1, 9, 10, 1], ['tanh', 'tanh', None])
+network = nn.NeuralNetwork([1, 10, 10, 1], ['relu', 'relu', None])
 
 #X is a list of inputs
 DataSpan = 30
@@ -12,7 +10,7 @@ X = [x for x in range(1,DataSpan)]
 Y = [np.log(y) for y in range (1,DataSpan)]
 
 
-network.Optimize(X, Y, LearningRate=0.001, epochs=400)
+network.Optimize(X, Y, LearningRate=0.001, epochs=1000)
 
 NetworkPredictions = [network.Run(x)[0] for x in X]
 
